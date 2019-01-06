@@ -79,7 +79,7 @@ names(avgSteps)[2] <- "meanOfSteps"
 ggplot(avgSteps, aes(interval, meanOfSteps)) + geom_line(color = "steelblue", size = 0.8) + labs(title = "Time Series Plot of the 5-minute Interval", x = "5-minute intervals", y = "Average Number of Steps Taken")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](figure/unnamed-chunk-5-1.png)<!-- -->
 
 * Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -149,7 +149,7 @@ ggplot(newData, aes(date, steps)) + geom_bar(stat = "identity",
                                              width = 0.7) + facet_grid(. ~ month, scales = "free") + labs(title = "Histogram of Total Number of Steps Taken Each Day (no missing data)", x = "Date", y = "Total number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](figure/unnamed-chunk-9-1.png)<!-- -->
 
 * Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
@@ -263,7 +263,7 @@ xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays,
        xlab = "Interval", ylab = "Number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](figure/unnamed-chunk-14-1.png)<!-- -->
 
 ```
 
@@ -297,7 +297,7 @@ ggplot(avgSteps, aes(interval, avgSteps$x)) + geom_line(color = "red", size = 0.
   labs(title = "Time Series Plot of the 5-minute Interval", x = "5-minute intervals", y = "Average Number of Steps Taken")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](figure/unnamed-chunk-16-1.png)<!-- -->
 
 ```r
 # Maximum Number of Average Steps
@@ -332,7 +332,7 @@ ggplot(Data2, aes(date, steps)) + geom_bar(stat = "identity",
   labs(title = "Histogram of Total Number of Steps Taken Each Day (data fill-in)", x = "Date", y = "Total number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](figure/unnamed-chunk-17-1.png)<!-- -->
 
 ```r
 newTotalSteps <- aggregate(Data2$steps, 
@@ -398,5 +398,5 @@ xyplot(avgSteps$x ~ avgSteps$interval | avgSteps$weekdays,
        xlab = "Interval", ylab = "Number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](figure/unnamed-chunk-18-1.png)<!-- -->
 
