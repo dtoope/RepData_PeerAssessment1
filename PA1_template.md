@@ -24,14 +24,11 @@ interval: Identifier for the 5-minute interval in which measurement was taken, T
 
 The elements below follow the structure proposed on the assignment page(https://www.coursera.org/learn/reproducible-research/peer/gYyPt/course-project-1)
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-echo = TRUE  # Always make code visible
-options(scipen = 1)  # Turn off scientific notations for numbers
-```
+
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 unzip("repdata_data_activity.zip")
 data <- read.csv("activity.csv", colClasses = c("integer", "Date", "factor"))
 data$month <- as.numeric(format(data$date, "%m"))
@@ -43,7 +40,8 @@ rownames(clean_data) <- 1:nrow(clean_data)
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 # Plot total number of steps each day in a histogram
 library(ggplot2)
 
@@ -51,27 +49,51 @@ ggplot(clean_data, aes(date, steps)) +
 geom_bar(stat = "identity", colour = "red", fill="red", width = 0.7) + 
   facet_grid(. ~ month, scales = "free") + 
   labs(title = "Histogram of Total Number of Steps Taken Each Day", x = "Date", y = "Total number of steps")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+```r
 # Determine the mean and median
 TotalSteps <- aggregate(clean_data$steps,list(clean_data$date),FUN="sum")
 MeanSteps <- mean(TotalSteps$x)
 MeanSteps
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 MedianSteps <- median(TotalSteps$x)
 MedianSteps
+```
 
+```
+## [1] 10765
 ```
 
 
 ## What is the average daily activity pattern?
 
-```{r}
+
+```r
 avgSteps <- aggregate(clean_data$steps, list(interval = as.numeric(as.character(clean_data$interval))), FUN = "mean")
 
 ggplot(avgSteps, aes(interval, avgSteps$x)) + geom_line(color = "red", size = 0.8) + 
   labs(title = "Time Series Plot of the 5-minute Interval", x = "5-minute intervals", y = "Average Number of Steps Taken")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+```r
 # Maximum Number of Average Steps
 avgSteps[avgSteps$x == max(avgSteps$x), ]
+```
 
+```
+##     interval        x
+## 104      835 206.1698
 ```
 
 
@@ -79,7 +101,8 @@ avgSteps[avgSteps$x == max(avgSteps$x), ]
 
 Missing data will be filled in using the mean of the 5 minute interval for each corresponding interval. 
 
-```{r}
+
+```r
 Interval_max <- avgSteps[avgSteps$x == max(avgSteps$x),]
 Number_rows <- sum(is.na(data))
 
@@ -94,6 +117,11 @@ ggplot(Data2, aes(date, steps)) + geom_bar(stat = "identity",
                                              fill = "Red",
                                              width = 0.7) + facet_grid(. ~ month, scales = "free") + 
   labs(title = "Histogram of Total Number of Steps Taken Each Day (data fill-in)", x = "Date", y = "Total number of steps")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
 newTotalSteps <- aggregate(Data2$steps, 
                            list(Date = Data2$date), 
                            FUN = "sum")$x
@@ -101,19 +129,44 @@ newTotalSteps <- aggregate(Data2$steps,
 # Mean and median of filled in data 
 newMean <- mean(newTotalSteps)
 newMean
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 newMedian <- median(newTotalSteps)
 newMedian
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 Meandiff <- newMean- MeanSteps
 Meandiff
+```
+
+```
+## [1] 0
+```
+
+```r
 Mediandiff <- newMedian - MedianSteps
 Mediandiff
+```
 
+```
+## [1] 1.188679
 ```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r}
+
+```r
 Data2$weekdays <- factor(format(Data2$date, "%A"))
 levels(Data2$weekdays) <- list(weekday = c("Monday", "Tuesday",
                                              "Wednesday", 
@@ -131,4 +184,6 @@ xyplot(avgSteps$x ~ avgSteps$interval | avgSteps$weekdays,
        layout = c(1, 2), type = "l", 
        xlab = "Interval", ylab = "Number of steps")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
