@@ -1,13 +1,6 @@
----
-title: "Reproducible Research Assignment 1"
-author: "David Toope"
-date: "January 5, 2019"
-output: 
-  html_document: 
-    keep_md: yes
----
 # Reproducible Research Assignment 1
 by David Toope
+January 5, 2019
 
 INTRODUCTION 
 It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up.
