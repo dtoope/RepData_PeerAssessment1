@@ -149,7 +149,7 @@ ggplot(newData, aes(date, steps)) + geom_bar(stat = "identity",
                                              width = 0.7) + facet_grid(. ~ month, scales = "free") + labs(title = "Histogram of Total Number of Steps Taken Each Day (no missing data)", x = "Date", y = "Total number of steps")
 ```
 
-![](figure/unnamed-chunk-9-1.png)<!-- -->
+![](figure/unnamed-chunk-4-1.png)<!-- -->
 
 * Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
@@ -197,75 +197,6 @@ newMedian - oldMedian
 ```
 So, after imputing the missing data, the new mean of total steps taken per day is the same as that of the old mean; the new median of total steps taken per day is greater than that of the old median.
 
-### Are there differences in activity patterns between weekdays and weekends?
-
-* Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
-
-
-```r
-head(newData)
-```
-
-```
-##       steps       date interval month
-## 1 1.7169811 2012-10-01        0    10
-## 2 0.3396226 2012-10-01        5    10
-## 3 0.1320755 2012-10-01       10    10
-## 4 0.1509434 2012-10-01       15    10
-## 5 0.0754717 2012-10-01       20    10
-## 6 2.0943396 2012-10-01       25    10
-```
-
-```r
-newData$weekdays <- factor(format(newData$date, "%A"))
-levels(newData$weekdays)
-```
-
-```
-## [1] "Friday"    "Monday"    "Saturday"  "Sunday"    "Thursday"  "Tuesday"  
-## [7] "Wednesday"
-```
-
-```r
-levels(newData$weekdays) <- list(weekday = c("Monday", "Tuesday",
-                                             "Wednesday", 
-                                             "Thursday", "Friday"),
-                                 weekend = c("Saturday", "Sunday"))
-levels(newData$weekdays)
-```
-
-```
-## [1] "weekday" "weekend"
-```
-
-```r
-table(newData$weekdays)
-```
-
-```
-## 
-## weekday weekend 
-##   12960    4608
-```
-
-* Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-
-
-```r
-avgSteps <- aggregate(newData$steps, 
-                      list(interval = as.numeric(as.character(newData$interval)), 
-                           weekdays = newData$weekdays),
-                      FUN = "mean")
-names(avgSteps)[3] <- "meanOfSteps"
-library(lattice)
-xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays, 
-       layout = c(1, 2), type = "l", 
-       xlab = "Interval", ylab = "Number of steps")
-```
-
-![](figure/unnamed-chunk-14-1.png)<!-- -->
-
-```
 
 ```r
 TotalSteps <- aggregate(clean_data$steps,list(clean_data$date),FUN="sum")
@@ -297,7 +228,7 @@ ggplot(avgSteps, aes(interval, avgSteps$x)) + geom_line(color = "red", size = 0.
   labs(title = "Time Series Plot of the 5-minute Interval", x = "5-minute intervals", y = "Average Number of Steps Taken")
 ```
 
-![](figure/unnamed-chunk-16-1.png)<!-- -->
+![](figure/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
 # Maximum Number of Average Steps
@@ -332,7 +263,7 @@ ggplot(Data2, aes(date, steps)) + geom_bar(stat = "identity",
   labs(title = "Histogram of Total Number of Steps Taken Each Day (data fill-in)", x = "Date", y = "Total number of steps")
 ```
 
-![](figure/unnamed-chunk-17-1.png)<!-- -->
+![](figure/unnamed-chunk-4-1.png)<!-- -->
 
 ```r
 newTotalSteps <- aggregate(Data2$steps, 
@@ -398,5 +329,5 @@ xyplot(avgSteps$x ~ avgSteps$interval | avgSteps$weekdays,
        xlab = "Interval", ylab = "Number of steps")
 ```
 
-![](figure/unnamed-chunk-18-1.png)<!-- -->
+![](figure/unnamed-chunk-5-1.png)<!-- -->
 
